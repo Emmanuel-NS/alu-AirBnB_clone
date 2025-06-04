@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 """console.py - Command interpreter for the AirBnB clone project.
 
 This module defines the HBNBCammand class, which provides a command-line
