@@ -50,10 +50,10 @@ class HBNBCammand(cmd.Cmd):
         classes = ['BaseModel']
         if arg:
             if arg[0] not in classes:
-                print("class name doesn't exit")
+                print("** class doesn't exist **")
             else:
                 if len(arg) < 2:
-                    print("instance id missing")
+                    print("** instance id missing **")
                 else:
                     obj_key = f"{arg[0]}.{arg[1]}"
                     objs = storage.all()
@@ -63,9 +63,9 @@ class HBNBCammand(cmd.Cmd):
                             print(obj)
                             result = True
                     if not result:
-                        print('no instance found')
+                        print(' ** no instance found **')
         else:
-            print("class name is missing")
+            print("** class name missing **")
 
     def do_destroy(self, arg):
         """Delete an instance based on the class name and id."""
@@ -73,10 +73,10 @@ class HBNBCammand(cmd.Cmd):
         classes = ['BaseModel']
         if arg:
             if arg[0] not in classes:
-                print("class name doesn't exit")
+                print("** class doesn't exist **")
             else:
                 if len(arg) < 2:
-                    print("instance id missing")
+                    print("** instance id missing **")
                 else:
                     obj_key = f"{arg[0]}.{arg[1]}"
                     objs = storage.all()
@@ -88,9 +88,9 @@ class HBNBCammand(cmd.Cmd):
                             result = True
                             break
                     if not result:
-                        print('no instance found')
+                        print(' ** no instance found **')
         else:
-            print("class name is missing")
+            print("** class name missing **")
 
 if __name__ == "__main__":
     obj = HBNBCammand()
