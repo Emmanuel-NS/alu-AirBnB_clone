@@ -38,7 +38,7 @@ class HBNBCammand(cmd.Cmd):
         if not arg:
             print("** class name missing **")
         elif arg[0] not in classes:
-            print("** classname doesn't exist **")
+            print("** class doesn't exist **")
         else:
             inst = BaseModel()
             inst.save()
