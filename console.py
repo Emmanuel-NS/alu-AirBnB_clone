@@ -36,7 +36,7 @@ class HBNBCammand(cmd.Cmd):
         arg = shlex.split(arg)
         classes = ['BaseModel']
         if not arg:
-            print("** class name is missing **")
+            print("** class name missing **")
         elif arg[0] not in classes:
             print("** classname doesn't exist **")
         else:
