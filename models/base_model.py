@@ -1,6 +1,8 @@
-from models import storage
 import uuid
 from datetime import datetime
+
+from models import storage
+
 
 class BaseModel:
     def __init__(self,**kwargs):
