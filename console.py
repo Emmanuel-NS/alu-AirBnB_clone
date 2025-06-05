@@ -63,7 +63,7 @@ class HBNBCammand(cmd.Cmd):
                             print(obj)
                             result = True
                     if not result:
-                        print(' ** no instance found **')
+                        print('** no instance found **')
         else:
             print("** class name missing **")
 
@@ -88,7 +88,7 @@ class HBNBCammand(cmd.Cmd):
                             result = True
                             break
                     if not result:
-                        print(' ** no instance found **')
+                        print('** no instance found **')
         else:
             print("** class name missing **")
     
@@ -133,7 +133,7 @@ class HBNBCammand(cmd.Cmd):
                             result = True
                             break
                     if not result:
-                        print(' ** no instance found **')
+                        print('** no instance found **')
         else:
             print("** class name missing **")
 
