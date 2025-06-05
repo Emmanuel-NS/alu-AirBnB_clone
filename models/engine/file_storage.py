@@ -8,7 +8,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self,obj):
-        key=f'{obj.to_dict()['__class__']}.{obj.id}'
+        key=f'{obj.__class__.__name__}.{obj.id}'
         FileStorage.__objects[key]= obj
     
     def save(self):
