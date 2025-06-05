@@ -8,7 +8,7 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self,obj):
-        key=f'{obj.__class__.__name__}.{obj.id}'
+        key=f'{obj.to_dict()['__class__']}.{obj.id}'
         FileStorage.__objects[key]= obj
     
     def save(self):
@@ -22,10 +22,15 @@ class FileStorage:
     def reload(self):
         try:
             from models.base_model import BaseModel
+            from models.user import User
             with open(FileStorage.__file_path,'r') as file:
                 data=json.load(file)
+            class_names={'BaseModel':BaseModel,'User':User}
             for key,value in data.items():
-                FileStorage.__objects[key]=BaseModel(**value)
+                inst=value['__class__']
+                if inst in class_names:
+                    inst=class_names[inst]
+                    FileStorage.__objects[key]=inst(**value)
 
         except FileNotFoundError:
             pass

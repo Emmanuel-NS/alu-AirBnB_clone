@@ -10,6 +10,7 @@ import shlex
 
 from models.__init__ import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCammand(cmd.Cmd):
@@ -34,22 +35,22 @@ class HBNBCammand(cmd.Cmd):
     def do_create(self, arg):
         """Create a new instance of BaseModel and print its id."""
         arg = shlex.split(arg)
-        classes = ['BaseModel']
+        class_names = {'BaseModel':BaseModel,'User':User}
         if not arg:
             print("** class name missing **")
-        elif arg[0] not in classes:
+        elif arg[0] not in class_names:   
             print("** class doesn't exist **")
         else:
-            inst = BaseModel()
+            inst = class_names[arg[0]]()
             inst.save()
             print(inst.id)
 
     def do_show(self, arg):
         """Show the string representation of an instance."""
         arg = shlex.split(arg)
-        classes = ['BaseModel']
+        class_names = {'BaseModel':BaseModel,'User':User}
         if arg:
-            if arg[0] not in classes:
+            if arg[0] not in class_names:
                 print("** class doesn't exist **")
             else:
                 if len(arg) < 2:
@@ -57,12 +58,10 @@ class HBNBCammand(cmd.Cmd):
                 else:
                     obj_key = f"{arg[0]}.{arg[1]}"
                     objs = storage.all()
-                    result = False
-                    for key, obj in objs.items():
-                        if key == obj_key:
-                            print(obj)
-                            result = True
-                    if not result:
+                    try:
+                        obj = objs[obj_key]
+                        print(obj)
+                    except KeyError:
                         print('** no instance found **')
         else:
             print("** class name missing **")
@@ -70,9 +69,9 @@ class HBNBCammand(cmd.Cmd):
     def do_destroy(self, arg):
         """Delete an instance based on the class name and id."""
         arg = shlex.split(arg)
-        classes = ['BaseModel']
+        class_names = {'BaseModel':BaseModel,'User':User}
         if arg:
-            if arg[0] not in classes:
+            if arg[0] not in class_names:
                 print("** class doesn't exist **")
             else:
                 if len(arg) < 2:
@@ -80,14 +79,10 @@ class HBNBCammand(cmd.Cmd):
                 else:
                     obj_key = f"{arg[0]}.{arg[1]}"
                     objs = storage.all()
-                    result = False
-                    for key, obj in objs.items():
-                        if key == obj_key:
-                            del storage.all()[key]
-                            storage.save()
-                            result = True
-                            break
-                    if not result:
+                    try:
+                        del objs[obj_key]
+                        storage.save()
+                    except KeyError:
                         print('** no instance found **')
         else:
             print("** class name missing **")
@@ -95,11 +90,11 @@ class HBNBCammand(cmd.Cmd):
     def do_all(self, arg):
         """Show all instances of a class or all instances if no class is specified."""
         arg = shlex.split(arg)
-        classes = ['BaseModel']
+        class_names = {'BaseModel':BaseModel,'User':User}
         objs = storage.all()
         if not arg:
             print([str(obj) for obj in objs.values()])
-        elif arg[0] not in classes:
+        elif arg[0] not in class_names:
             print("** class doesn't exist **")
         else:
             result = [str(obj) for key, obj in objs.items() if key.startswith(arg[0])]
@@ -111,9 +106,9 @@ class HBNBCammand(cmd.Cmd):
     def do_update(self, arg):
         """Update an instance based on the class name and id."""
         arg = shlex.split(arg)
-        classes = ['BaseModel']
+        class_names = {'BaseModel':BaseModel,'User':User}
         if arg:
-            if arg[0] not in classes:
+            if arg[0] not in class_names:
                 print("** class doesn't exist **")
             else:
                 if len(arg) < 2:
@@ -125,14 +120,11 @@ class HBNBCammand(cmd.Cmd):
                 else:
                     obj_key = f"{arg[0]}.{arg[1]}"
                     objs = storage.all()
-                    result = False
-                    for key, obj in objs.items():
-                        if key == obj_key:
-                            setattr(obj, arg[2], arg[3])
-                            obj.save()
-                            result = True
-                            break
-                    if not result:
+                    try:
+                        obj = objs[obj_key]
+                        setattr(obj, arg[2], arg[3])
+                        obj.save()
+                    except KeyError:
                         print('** no instance found **')
         else:
             print("** class name missing **")
