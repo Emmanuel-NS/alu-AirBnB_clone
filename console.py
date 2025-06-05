@@ -11,6 +11,11 @@ import shlex
 from models.__init__ import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
 
 
 class HBNBCammand(cmd.Cmd):
@@ -35,7 +40,15 @@ class HBNBCammand(cmd.Cmd):
     def do_create(self, arg):
         """Create a new instance of BaseModel and print its id."""
         arg = shlex.split(arg)
-        class_names = {'BaseModel':BaseModel,'User':User}
+        class_names = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'Amenity': Amenity,
+    'City': City,
+    'Place': Place,
+    'Review': Review,
+    'State': State
+            }
         if not arg:
             print("** class name missing **")
         elif arg[0] not in class_names:   
@@ -48,7 +61,15 @@ class HBNBCammand(cmd.Cmd):
     def do_show(self, arg):
         """Show the string representation of an instance."""
         arg = shlex.split(arg)
-        class_names = {'BaseModel':BaseModel,'User':User}
+        class_names = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'Amenity': Amenity,
+    'City': City,
+    'Place': Place,
+    'Review': Review,
+    'State': State
+        }
         if arg:
             if arg[0] not in class_names:
                 print("** class doesn't exist **")
@@ -69,7 +90,15 @@ class HBNBCammand(cmd.Cmd):
     def do_destroy(self, arg):
         """Delete an instance based on the class name and id."""
         arg = shlex.split(arg)
-        class_names = {'BaseModel':BaseModel,'User':User}
+        class_names = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'Amenity': Amenity,
+    'City': City,
+    'Place': Place,
+    'Review': Review,
+    'State': State
+        }
         if arg:
             if arg[0] not in class_names:
                 print("** class doesn't exist **")
@@ -90,7 +119,15 @@ class HBNBCammand(cmd.Cmd):
     def do_all(self, arg):
         """Show all instances of a class or all instances if no class is specified."""
         arg = shlex.split(arg)
-        class_names = {'BaseModel':BaseModel,'User':User}
+        class_names = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'Amenity': Amenity,
+    'City': City,
+    'Place': Place,
+    'Review': Review,
+    'State': State
+         }
         objs = storage.all()
         if not arg:
             print([str(obj) for obj in objs.values()])
@@ -106,7 +143,15 @@ class HBNBCammand(cmd.Cmd):
     def do_update(self, arg):
         """Update an instance based on the class name and id."""
         arg = shlex.split(arg)
-        class_names = {'BaseModel':BaseModel,'User':User}
+        class_names = {
+    'BaseModel': BaseModel,
+    'User': User,
+    'Amenity': Amenity,
+    'City': City,
+    'Place': Place,
+    'Review': Review,
+    'State': State
+           }
         if arg:
             if arg[0] not in class_names:
                 print("** class doesn't exist **")
