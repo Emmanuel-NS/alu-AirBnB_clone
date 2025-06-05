@@ -91,6 +91,52 @@ class HBNBCammand(cmd.Cmd):
                         print(' ** no instance found **')
         else:
             print("** class name missing **")
+    
+    def do_all(self, arg):
+        """Show all instances of a class or all instances if no class is specified."""
+        arg = shlex.split(arg)
+        classes = ['BaseModel']
+        objs = storage.all()
+        if not arg:
+            print([str(obj) for obj in objs.values()])
+        elif arg[0] not in classes:
+            print("** class doesn't exist **")
+        else:
+            result = [str(obj) for key, obj in objs.items() if key.startswith(arg[0])]
+            if result:
+                print(result)
+            else:
+                print(' ** no instance found **')
+            
+    def do_update(self, arg):
+        """Update an instance based on the class name and id."""
+        arg = shlex.split(arg)
+        classes = ['BaseModel']
+        if arg:
+            if arg[0] not in classes:
+                print("** class doesn't exist **")
+            else:
+                if len(arg) < 2:
+                    print("** instance id missing **")
+                elif len(arg) < 3:
+                    print("** attribute name missing **")
+                elif len(arg) < 4:
+                    print("** value missing **")
+                else:
+                    obj_key = f"{arg[0]}.{arg[1]}"
+                    objs = storage.all()
+                    result = False
+                    for key, obj in objs.items():
+                        if key == obj_key:
+                            setattr(obj, arg[2], arg[3])
+                            obj.save()
+                            result = True
+                            break
+                    if not result:
+                        print(' ** no instance found **')
+        else:
+            print("** class name missing **")
+
 
 if __name__ == "__main__":
     obj = HBNBCammand()
